@@ -46,7 +46,7 @@ func Register(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	if status {
+	if !status {
 		http.Error(response, "Users is not active"+err.Error(), 400)
 		return
 	}

@@ -9,8 +9,8 @@ import (
 )
 
 func CreateRegister(user models.User) (string, bool, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
 	db := MongoCN.Database("twisterdb")
@@ -25,6 +25,7 @@ func CreateRegister(user models.User) (string, bool, error) {
 	}
 
 	ObjID, _ := result.InsertedID.(primitive.ObjectID)
+
 	return ObjID.String(), true, nil
 
 }
