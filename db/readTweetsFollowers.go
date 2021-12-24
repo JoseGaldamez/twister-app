@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"fmt"
 	"time"
 	"twister/app/models"
 
@@ -21,11 +22,12 @@ func ReadTweetsFollowers(ID string, page int) ([]models.ReadTweetsFollowers, boo
 	query := make([]bson.M, 0)
 
 	query = append(query, bson.M{"$match": bson.M{"userid": ID}})
+
 	query = append(query, bson.M{
 		"$lookup": bson.M{
 			"from":         "tweets",
-			"localField":   "userrealationid",
-			"foreingField": "userid",
+			"localField":   "userrelationid",
+			"foreignField": "userid",
 			"as":           "usertweets",
 		},
 	})
@@ -48,15 +50,25 @@ func ReadTweetsFollowers(ID string, page int) ([]models.ReadTweetsFollowers, boo
 		"$limit": 20,
 	})
 
-	cursor, _ := collection.Aggregate(ctx, query)
+	fmt.Println("Teminamos las condiciones")
 
-	var results []models.ReadTweetsFollowers
+	cursor, err := collection.Aggregate(ctx, query)
 
-	err := cursor.All(ctx, &results)
 	if err != nil {
-		return results, false
+
+		fmt.Println("Aggregate ejecutado con errores")
 	}
 
-	return results, true
+	var result []models.ReadTweetsFollowers
+
+	err = cursor.All(ctx, &result)
+
+	if err != nil {
+		return result, false
+	}
+
+	cursor.Close(ctx)
+
+	return result, true
 
 }

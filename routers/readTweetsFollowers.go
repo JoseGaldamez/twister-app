@@ -2,6 +2,7 @@ package routers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 	"twister/app/db"
@@ -22,6 +23,8 @@ func ReadTweetsFollowers(response http.ResponseWriter, request *http.Request) {
 
 	result, ok := db.ReadTweetsFollowers(IDUser, page)
 
+	fmt.Println(result)
+
 	if !ok {
 		http.Error(response, "Error while reading tweets", http.StatusBadRequest)
 		return
@@ -29,6 +32,6 @@ func ReadTweetsFollowers(response http.ResponseWriter, request *http.Request) {
 
 	response.Header().Set("Content-Type", " application/json")
 	response.WriteHeader(http.StatusCreated)
-	json.NewEncoder(response).Encode(result)
+	json.NewEncoder(response).Encode(&result)
 
 }
