@@ -20,6 +20,8 @@ func Controllers() {
 
 	router.HandleFunc("/login", middlew.CheckDataBase(routers.Login)).Methods("POST")
 
+	router.HandleFunc("/profile", middlew.CheckDataBase(middlew.ValidateJWT(routers.ShowProfile))).Methods("GET")
+
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
 		PORT = "8080"
