@@ -13,6 +13,6 @@ type ReadTweetsFollowers struct {
 	Tweet          struct {
 		Message string    `bson:"message" json:"message,omitempty"`
 		Date    time.Time `bson:"date" json:"date,omitempty"`
-		ID      time.Time `bson:"_id" json:"_id,omitempty"`
+		ID      string    `bson:"_id" json:"_id,omitempty"`
 	}
 }

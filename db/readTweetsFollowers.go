@@ -28,12 +28,12 @@ func ReadTweetsFollowers(ID string, page int) ([]models.ReadTweetsFollowers, boo
 			"from":         "tweets",
 			"localField":   "userrelationid",
 			"foreignField": "userid",
-			"as":           "usertweets",
+			"as":           "tweet",
 		},
 	})
 
 	query = append(query, bson.M{
-		"$unwind": "$usertweets",
+		"$unwind": "$tweet",
 	})
 
 	query = append(query, bson.M{
@@ -50,12 +50,9 @@ func ReadTweetsFollowers(ID string, page int) ([]models.ReadTweetsFollowers, boo
 		"$limit": 20,
 	})
 
-	fmt.Println("Teminamos las condiciones")
-
 	cursor, err := collection.Aggregate(ctx, query)
 
 	if err != nil {
-
 		fmt.Println("Aggregate ejecutado con errores")
 	}
 
