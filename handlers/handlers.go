@@ -16,11 +16,15 @@ import (
 func Controllers() {
 	router := mux.NewRouter()
 
+	// Endpoints of Users
 	router.HandleFunc("/register", middlew.CheckDataBase(routers.Register)).Methods("POST")
 	router.HandleFunc("/login", middlew.CheckDataBase(routers.Login)).Methods("POST")
 	router.HandleFunc("/profile", middlew.CheckDataBase(middlew.ValidateJWT(routers.ShowProfile))).Methods("GET")
 	router.HandleFunc("/updateProfile", middlew.CheckDataBase(middlew.ValidateJWT(routers.UpdateProfile))).Methods("PUT")
+
+	// Endpoints of Tweets
 	router.HandleFunc("/addTweet", middlew.CheckDataBase(middlew.ValidateJWT(routers.SaveTweet))).Methods("POST")
+	router.HandleFunc("/userTweets", middlew.CheckDataBase(middlew.ValidateJWT(routers.ReadUserTweets))).Methods("GET")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
