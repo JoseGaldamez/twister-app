@@ -24,6 +24,7 @@ func ProcessToken(token string) (*models.Claim, bool, string, error) {
 	}
 
 	token = strings.TrimSpace(splitToken[1])
+
 	tkn, err := jwtToken.ParseWithClaims(token, claims, func(t *jwtToken.Token) (interface{}, error) {
 		return mykey, nil
 	})
@@ -34,7 +35,6 @@ func ProcessToken(token string) (*models.Claim, bool, string, error) {
 			Email = claims.Email
 			IDUser = claims.ID.Hex()
 		}
-
 		return claims, found, IDUser, nil
 	}
 	if !tkn.Valid {

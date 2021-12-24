@@ -11,7 +11,8 @@ import (
 // MongoCN contain the connection to DB
 var MongoCN = conectDB()
 
-var clientOptions = options.Client().ApplyURI("mongodb+srv://JoseGaldamez:Magodeoz1991@bdtwister.0emur.mongodb.net/twisterdb?retryWrites=true&w=majority")
+//var clientOptions = options.Client().ApplyURI("mongodb+srv://JoseGaldamez:Magodeoz1991@bdtwister.0emur.mongodb.net/twisterdb?retryWrites=true&w=majority")
+var clientOptions = options.Client().ApplyURI(MongoLink())
 
 func conectDB() *mongo.Client {
 	client, err := mongo.Connect(context.TODO(), clientOptions)

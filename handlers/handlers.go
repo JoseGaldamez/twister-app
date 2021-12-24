@@ -17,10 +17,10 @@ func Controllers() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/register", middlew.CheckDataBase(routers.Register)).Methods("POST")
-
 	router.HandleFunc("/login", middlew.CheckDataBase(routers.Login)).Methods("POST")
-
 	router.HandleFunc("/profile", middlew.CheckDataBase(middlew.ValidateJWT(routers.ShowProfile))).Methods("GET")
+	router.HandleFunc("/updateProfile", middlew.CheckDataBase(middlew.ValidateJWT(routers.UpdateProfile))).Methods("PUT")
+	router.HandleFunc("/addTweet", middlew.CheckDataBase(middlew.ValidateJWT(routers.SaveTweet))).Methods("POST")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {

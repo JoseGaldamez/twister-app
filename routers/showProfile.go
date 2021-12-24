@@ -22,7 +22,7 @@ func ShowProfile(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	response.Header().Set("Context-Type", "application/json")
+	response.Header().Set("Content-Type", "application/json")
 	response.WriteHeader(http.StatusCreated)
 
 	json.NewEncoder(response).Encode(profile)
