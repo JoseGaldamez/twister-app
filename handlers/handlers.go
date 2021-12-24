@@ -25,11 +25,18 @@ func Controllers() {
 	router.HandleFunc("/uploadBanner", middlew.CheckDataBase(middlew.ValidateJWT(routers.UploadBanner))).Methods("POST")
 	router.HandleFunc("/getAvatar", middlew.CheckDataBase(routers.UploadBanner)).Methods("GET")
 	router.HandleFunc("/getBanner", middlew.CheckDataBase(routers.UploadBanner)).Methods("GET")
+	router.HandleFunc("/listUsers", middlew.CheckDataBase(middlew.ValidateJWT(routers.ReadAllUsers))).Methods("GET")
+
+	// Relations
+	router.HandleFunc("/addRelation", middlew.CheckDataBase(middlew.ValidateJWT(routers.AddRelation))).Methods("POST")
+	router.HandleFunc("/deleteRelation", middlew.CheckDataBase(middlew.ValidateJWT(routers.DeleteRelation))).Methods("DELETE")
+	router.HandleFunc("/checkRelation", middlew.CheckDataBase(middlew.ValidateJWT(routers.CheckRelation))).Methods("GET")
 
 	// Endpoints of Tweets
 	router.HandleFunc("/addTweet", middlew.CheckDataBase(middlew.ValidateJWT(routers.SaveTweet))).Methods("POST")
 	router.HandleFunc("/userTweets", middlew.CheckDataBase(middlew.ValidateJWT(routers.ReadUserTweets))).Methods("GET")
 	router.HandleFunc("/deleteTweet", middlew.CheckDataBase(middlew.ValidateJWT(routers.DeleteTweet))).Methods("DELETE")
+	router.HandleFunc("/listTweets", middlew.CheckDataBase(middlew.ValidateJWT(routers.ReadTweetsFollowers))).Methods("GET")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
